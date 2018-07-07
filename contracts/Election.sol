@@ -7,11 +7,10 @@ contract Election{
         uint voteCount;
     }
 
-    struct Voter{
-        address id;
-        string name;
-        uint voteCount;
-    }
+    event votedEvent(
+        uint indexed _candidateId
+    );
+
     uint public abc;
     mapping (uint=>Candidate) public candidates;
     mapping (address=>bool) public voted;
@@ -34,6 +33,7 @@ contract Election{
         require(_candidateId > 0 && _candidateId <= candidatesCount);
         voted[msg.sender] = true;
         candidates[_candidateId].voteCount++;
+        emit votedEvent(_candidateId);
     }
 
     function pcp(uint a) public {

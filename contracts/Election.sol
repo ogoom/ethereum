@@ -12,8 +12,9 @@ contract Election{
         string name;
         uint voteCount;
     }
-
+    uint public abc;
     mapping (uint=>Candidate) public candidates;
+    mapping (address=>bool) public voted;
 
     uint public candidatesCount;
     constructor() public {
@@ -26,5 +27,16 @@ contract Election{
     function addCandidate(string _name) private {
         candidatesCount++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+    }
+
+    function vote(uint _candidateId)  public {
+        require(voted[msg.sender] == false);
+        require(_candidateId > 0 && _candidateId <= candidatesCount);
+        voted[msg.sender] = true;
+        candidates[_candidateId].voteCount++;
+    }
+
+    function pcp(uint a) public {
+        abc = a*5;
     }
 }
